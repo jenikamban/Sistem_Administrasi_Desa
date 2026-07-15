@@ -345,6 +345,23 @@
                 </a>
             </li>
 
+
+            <li class="nav-heading">Publikasi & Transparansi</li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('berita.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('berita.index') ? route('berita.index') : '#' }}">
+                    <i class="bi bi-newspaper"></i>
+                    <span>Berita Desa</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('apbd.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('apbd.index') ? route('apbd.index') : '#' }}">
+                    <i class="bi bi-bar-chart"></i>
+                    <span>Realisasi APBD</span>
+                </a>
+            </li>
+
         </ul>
 
     </aside><!-- End Sidebar-->

@@ -10,6 +10,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+// Public Verifikasi Surat
+Route::get('/verifikasi-surat/{kode}', [\App\Http\Controllers\VerifikasiSuratController::class, 'verify'])->name('verifikasi.surat');
+
 Route::middleware('guest')->group(function () {
     Route::get('/', [LoginController::class, 'index'])->name('login');
     Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('login.authenticate');
@@ -24,13 +29,26 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/edit', [DashboardController::class, 'edit'])->name('dashboard.edit');
     Route::put('/dashboard/update', [DashboardController::class, 'update'])->name('dashboard.update');
 
-    Route::resource('/user', UserController::class)->middleware('role:Superadmin');
+    Route::resource('/user', UserController::class)->middleware('role:Superadmin,Admin');
 
     // Task 2: Kependudukan
-    Route::resource('/kartu-keluarga', \App\Http\Controllers\KartuKeluargaController::class)->middleware('role:Superadmin,Staf');
-    Route::resource('/warga', \App\Http\Controllers\WargaController::class)->except(['show'])->middleware('role:Superadmin,Staf');
+    Route::resource('/kartu-keluarga', \App\Http\Controllers\KartuKeluargaController::class)->middleware('role:Superadmin,Admin,Staf');
+    Route::resource('/warga', \App\Http\Controllers\WargaController::class)->except(['show'])->middleware('role:Superadmin,Admin,Staf');
     Route::get('/warga/{warga}', [\App\Http\Controllers\WargaController::class, 'show'])->name('warga.show'); // Warga show can be accessed by any auth user
-    Route::resource('/mutasi-penduduk', \App\Http\Controllers\MutasiPendudukController::class)->middleware('role:Superadmin,Staf');
+    Route::resource('/mutasi-penduduk', \App\Http\Controllers\MutasiPendudukController::class)->middleware('role:Superadmin,Admin,Staf');
+
+    // Task 3: Surat Menyurat
+    Route::resource('/surat-permohonan', \App\Http\Controllers\SuratPermohonanController::class);
+    Route::post('/surat-permohonan/{surat_permohonan}/approve', [\App\Http\Controllers\SuratPermohonanController::class, 'approve'])->name('surat-permohonan.approve');
+    Route::post('/surat-permohonan/{surat_permohonan}/reject', [\App\Http\Controllers\SuratPermohonanController::class, 'reject'])->name('surat-permohonan.reject');
+    Route::get('/surat-permohonan/{surat_permohonan}/print', [\App\Http\Controllers\SuratPermohonanController::class, 'print'])->name('surat-permohonan.print');
+
+    // Task 4: Bantuan Sosial
+    Route::resource('/bantuan-sosial', \App\Http\Controllers\BantuanSosialController::class)->middleware('role:Superadmin,Admin,Staf');
+    Route::resource('/penerima-bantuan', \App\Http\Controllers\PenerimaBantuanController::class)->middleware('role:Superadmin,Admin,Staf');
+    // Task 5: Pengaduan dan Aspirasi
+    Route::resource('/pengaduan', \App\Http\Controllers\PengaduanController::class);
+    Route::post('/pengaduan/{pengaduan}/respond', [\App\Http\Controllers\PengaduanController::class, 'respond'])->name('pengaduan.respond')->middleware('role:Superadmin,Admin,Staf');
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');

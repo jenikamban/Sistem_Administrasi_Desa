@@ -7,7 +7,7 @@
 
 
 
-    <title>{{ $setting->app_name }} | {{ $title }}</title>
+    <title>{{ $setting->app_name }} | {{ $title ?? 'Sistem Administrasi Desa' }}</title>
     <meta content="{{ $setting->description }}" name="description">
     <meta content="{{ $setting->keywords }}" name="keywords">
     <meta content="Tamus Tahir" name="author">
@@ -284,16 +284,66 @@
                 </a>
             </li>
 
-            @if (Auth::user()->role == 'Superadmin')
+
+            @if (in_array(Auth::user()->role, ['Superadmin', 'Admin']))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"
-                        href="{{ route('user.index') }}">
+                        href="{{ Route::has('user.index') ? route('user.index') : '#' }}">
                         <i class='bx bx-user-pin'></i>
                         <span>User</span>
                     </a>
                 </li>
             @endif
 
+            @if (in_array(Auth::user()->role, ['Superadmin', 'Admin', 'Staf']))
+                <li class="nav-heading">Kependudukan</li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('kartu-keluarga.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('kartu-keluarga.index') ? route('kartu-keluarga.index') : '#' }}">
+                        <i class="bi bi-people"></i>
+                        <span>Kartu Keluarga</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('warga.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('warga.index') ? route('warga.index') : '#' }}">
+                        <i class="bi bi-person"></i>
+                        <span>Warga</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('mutasi-penduduk.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('mutasi-penduduk.index') ? route('mutasi-penduduk.index') : '#' }}">
+                        <i class="bi bi-arrow-left-right"></i>
+                        <span>Mutasi Penduduk</span>
+                    </a>
+                </li>
+
+                <li class="nav-heading">Bantuan Sosial</li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('bantuan-sosial.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('bantuan-sosial.index') ? route('bantuan-sosial.index') : '#' }}">
+                        <i class="bi bi-heart"></i>
+                        <span>Program Bansos</span>
+                    </a>
+                </li>
+            @endif
+
+            <li class="nav-heading">Layanan</li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('surat-permohonan.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('surat-permohonan.index') ? route('surat-permohonan.index') : '#' }}">
+                    <i class="bi bi-envelope"></i>
+                    <span>Surat Menyurat</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('pengaduan.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('pengaduan.index') ? route('pengaduan.index') : '#' }}">
+                    <i class="bi bi-megaphone"></i>
+                    <span>Pengaduan & Aspirasi</span>
+                </a>
+            </li>
 
         </ul>
 
@@ -302,7 +352,7 @@
     <main id="main" class="main flex-grow-1">
 
         <div class="card shadow p-3 page-header-card">
-            <h5 class="fw-bold m-0">{{ $title }}</h5>
+            <h5 class="fw-bold m-0">{{ $title ?? 'Menu' }}</h5>
         </div>
 
         {{ $slot }}

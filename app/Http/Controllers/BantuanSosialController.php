@@ -12,7 +12,10 @@ class BantuanSosialController extends Controller
      */
     public function index()
     {
-        //
+        return view('bantuan_sosial.index', [
+            'title' => 'Program Bantuan Sosial',
+            'bantuanSosials' => BantuanSosial::latest()->get(),
+        ]);
     }
 
     /**
@@ -20,7 +23,9 @@ class BantuanSosialController extends Controller
      */
     public function create()
     {
-        //
+        return view('bantuan_sosial.create', [
+            'title' => 'Tambah Program Bansos',
+        ]);
     }
 
     /**
@@ -28,7 +33,16 @@ class BantuanSosialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'nama_program' => 'required|string|max:255',
+            'sumber_dana' => 'required|string|max:255',
+            'tahun' => 'required|digits:4|integer|min:2000',
+            'deskripsi' => 'nullable|string',
+            'status' => 'required|in:Aktif,Selesai',
+        ]);
+
+        BantuanSosial::create($validate);
+        return to_route('bantuan-sosial.index')->withSuccess('Program Bantuan Sosial berhasil ditambahkan');
     }
 
     /**
@@ -36,7 +50,12 @@ class BantuanSosialController extends Controller
      */
     public function show(BantuanSosial $bantuanSosial)
     {
-        //
+        // Load penerima_bantuan relationship
+        $bantuanSosial->load('penerimaBantuan.warga');
+        return view('bantuan_sosial.show', [
+            'title' => 'Detail Program Bansos',
+            'bantuanSosial' => $bantuanSosial,
+        ]);
     }
 
     /**
@@ -44,7 +63,10 @@ class BantuanSosialController extends Controller
      */
     public function edit(BantuanSosial $bantuanSosial)
     {
-        //
+        return view('bantuan_sosial.edit', [
+            'title' => 'Edit Program Bansos',
+            'bantuanSosial' => $bantuanSosial,
+        ]);
     }
 
     /**
@@ -52,7 +74,16 @@ class BantuanSosialController extends Controller
      */
     public function update(Request $request, BantuanSosial $bantuanSosial)
     {
-        //
+        $validate = $request->validate([
+            'nama_program' => 'required|string|max:255',
+            'sumber_dana' => 'required|string|max:255',
+            'tahun' => 'required|digits:4|integer|min:2000',
+            'deskripsi' => 'nullable|string',
+            'status' => 'required|in:Aktif,Selesai',
+        ]);
+
+        $bantuanSosial->update($validate);
+        return to_route('bantuan-sosial.index')->withSuccess('Program Bantuan Sosial berhasil diubah');
     }
 
     /**
@@ -60,6 +91,7 @@ class BantuanSosialController extends Controller
      */
     public function destroy(BantuanSosial $bantuanSosial)
     {
-        //
+        $bantuanSosial->delete();
+        return to_route('bantuan-sosial.index')->withSuccess('Program Bantuan Sosial berhasil dihapus');
     }
 }

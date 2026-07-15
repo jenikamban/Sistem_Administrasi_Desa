@@ -27,4 +27,9 @@ class Warga extends Model
     {
         return $this->hasMany(MutasiPenduduk::class);
     }
+
+    public function pengaduans(): HasMany
+    {
+        return $this->hasMany(Pengaduan::class);
+    }
 }

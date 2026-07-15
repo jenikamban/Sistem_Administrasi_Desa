@@ -26,6 +26,12 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/user', UserController::class)->middleware('role:Superadmin');
 
+    // Task 2: Kependudukan
+    Route::resource('/kartu-keluarga', \App\Http\Controllers\KartuKeluargaController::class)->middleware('role:Superadmin,Staf');
+    Route::resource('/warga', \App\Http\Controllers\WargaController::class)->except(['show'])->middleware('role:Superadmin,Staf');
+    Route::get('/warga/{warga}', [\App\Http\Controllers\WargaController::class, 'show'])->name('warga.show'); // Warga show can be accessed by any auth user
+    Route::resource('/mutasi-penduduk', \App\Http\Controllers\MutasiPendudukController::class)->middleware('role:Superadmin,Staf');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });

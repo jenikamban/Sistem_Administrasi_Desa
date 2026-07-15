@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MutasiPenduduk;
+use App\Models\Warga;
 use Illuminate\Http\Request;
 
 class MutasiPendudukController extends Controller
@@ -12,7 +13,10 @@ class MutasiPendudukController extends Controller
      */
     public function index()
     {
-        //
+        return view('mutasi_penduduk.index', [
+            'title' => 'Data Mutasi Penduduk',
+            'mutasiPenduduks' => MutasiPenduduk::with('warga')->latest()->get(),
+        ]);
     }
 
     /**
@@ -20,7 +24,10 @@ class MutasiPendudukController extends Controller
      */
     public function create()
     {
-        //
+        return view('mutasi_penduduk.create', [
+            'title' => 'Catat Mutasi Baru',
+            'wargas' => Warga::all(),
+        ]);
     }
 
     /**
@@ -28,7 +35,23 @@ class MutasiPendudukController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'warga_id' => 'required|exists:wargas,id',
+            'jenis_mutasi' => 'required|in:Lahir,Meninggal,Masuk,Keluar',
+            'tanggal_mutasi' => 'required|date',
+            'keterangan' => 'required',
+        ]);
+
+        $mutasi = MutasiPenduduk::create($validate);
+        
+        // Auto update status_keaktifan on Warga
+        if (in_array($validate['jenis_mutasi'], ['Meninggal', 'Keluar'])) {
+            $warga = Warga::find($validate['warga_id']);
+            $warga->status_keaktifan = $validate['jenis_mutasi'] == 'Meninggal' ? 'Meninggal' : 'Pindah';
+            $warga->save();
+        }
+
+        return to_route('mutasi-penduduk.index')->withSuccess('Mutasi penduduk berhasil dicatat');
     }
 
     /**
@@ -36,7 +59,10 @@ class MutasiPendudukController extends Controller
      */
     public function show(MutasiPenduduk $mutasiPenduduk)
     {
-        //
+        return view('mutasi_penduduk.show', [
+            'title' => 'Detail Mutasi',
+            'mutasiPenduduk' => $mutasiPenduduk,
+        ]);
     }
 
     /**
@@ -44,7 +70,11 @@ class MutasiPendudukController extends Controller
      */
     public function edit(MutasiPenduduk $mutasiPenduduk)
     {
-        //
+        return view('mutasi_penduduk.edit', [
+            'title' => 'Edit Data Mutasi',
+            'mutasiPenduduk' => $mutasiPenduduk,
+            'wargas' => Warga::all(),
+        ]);
     }
 
     /**
@@ -52,7 +82,23 @@ class MutasiPendudukController extends Controller
      */
     public function update(Request $request, MutasiPenduduk $mutasiPenduduk)
     {
-        //
+        $validate = $request->validate([
+            'warga_id' => 'required|exists:wargas,id',
+            'jenis_mutasi' => 'required|in:Lahir,Meninggal,Masuk,Keluar',
+            'tanggal_mutasi' => 'required|date',
+            'keterangan' => 'required',
+        ]);
+
+        $mutasiPenduduk->update($validate);
+
+        // Auto update status_keaktifan on Warga
+        if (in_array($validate['jenis_mutasi'], ['Meninggal', 'Keluar'])) {
+            $warga = Warga::find($validate['warga_id']);
+            $warga->status_keaktifan = $validate['jenis_mutasi'] == 'Meninggal' ? 'Meninggal' : 'Pindah';
+            $warga->save();
+        }
+
+        return to_route('mutasi-penduduk.index')->withSuccess('Mutasi penduduk berhasil diubah');
     }
 
     /**
@@ -60,6 +106,7 @@ class MutasiPendudukController extends Controller
      */
     public function destroy(MutasiPenduduk $mutasiPenduduk)
     {
-        //
+        $mutasiPenduduk->delete();
+        return to_route('mutasi-penduduk.index')->withSuccess('Mutasi penduduk berhasil dihapus');
     }
 }

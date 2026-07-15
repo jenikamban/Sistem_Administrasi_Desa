@@ -370,6 +370,15 @@
                     <span>Arsip Dokumen</span>
                 </a>
             </li>
+            
+            <li class="nav-heading">Inventaris</li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('inventaris-desa.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('inventaris-desa.index') ? route('inventaris-desa.index') : '#' }}">
+                    <i class="bi bi-box-seam"></i>
+                    <span>Inventaris Desa</span>
+                </a>
+            </li>
 
         </ul>
 

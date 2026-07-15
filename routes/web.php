@@ -62,6 +62,9 @@ Route::middleware('auth')->group(function () {
     // Task 8: Arsip Dokumen
     Route::resource('/arsip-dokumen', \App\Http\Controllers\ArsipDokumenController::class)->middleware('role:Superadmin,Staf');
 
+    // Task 9: Inventaris Desa
+    Route::resource('/inventaris-desa', \App\Http\Controllers\InventarisDesaController::class)->middleware('role:Superadmin,Staf');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });

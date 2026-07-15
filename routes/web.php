@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('/berita', \App\Http\Controllers\BeritaController::class)->middleware('role:Superadmin,Admin,Staf');
     Route::resource('/apbd', \App\Http\Controllers\ApbdRealisasiController::class)->middleware('role:Superadmin,Admin,Staf');
 
+    // Task 8: Arsip Dokumen
+    Route::resource('/arsip-dokumen', \App\Http\Controllers\ArsipDokumenController::class)->middleware('role:Superadmin,Staf');
+
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');
 });

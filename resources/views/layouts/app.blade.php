@@ -362,6 +362,15 @@
                 </a>
             </li>
 
+            <li class="nav-heading">Arsip</li>
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('arsip-dokumen.*') ? '' : 'collapsed' }}"
+                        href="{{ Route::has('arsip-dokumen.index') ? route('arsip-dokumen.index') : '#' }}">
+                    <i class="bi bi-folder2-open"></i>
+                    <span>Arsip Dokumen</span>
+                </a>
+            </li>
+
         </ul>
 
     </aside><!-- End Sidebar-->

@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/pengaduan/{pengaduan}/respond', [\App\Http\Controllers\PengaduanController::class, 'respond'])->name('pengaduan.respond')->middleware('role:Superadmin,Admin,Staf');
 
     // Task 6: Publikasi dan Transparansi
-    Route::resource('/berita', \App\Http\Controllers\BeritaController::class)->middleware('role:Superadmin,Admin,Staf');
+    Route::resource('/berita', \App\Http\Controllers\BeritaController::class)->parameters(['berita' => 'berita'])->middleware('role:Superadmin,Admin,Staf');
     Route::resource('/apbd', \App\Http\Controllers\ApbdRealisasiController::class)->middleware('role:Superadmin,Admin,Staf');
 
     // Task 8: Arsip Dokumen

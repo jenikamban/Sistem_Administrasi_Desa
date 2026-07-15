@@ -31,10 +31,12 @@
                         <label for="jenis_surat" class="form-label">Jenis Surat <span class="text-danger">*</span></label>
                         <select class="form-select @error('jenis_surat') is-invalid @enderror" id="jenis_surat" name="jenis_surat" required>
                             <option value="">-- Pilih Jenis Surat --</option>
-                            <option value="Keterangan Domisili" {{ old('jenis_surat') == 'Keterangan Domisili' ? 'selected' : '' }}>Keterangan Domisili</option>
-                            <option value="Keterangan Tidak Mampu" {{ old('jenis_surat') == 'Keterangan Tidak Mampu' ? 'selected' : '' }}>Keterangan Tidak Mampu</option>
-                            <option value="Keterangan Usaha" {{ old('jenis_surat') == 'Keterangan Usaha' ? 'selected' : '' }}>Keterangan Usaha</option>
-                            <option value="Pengantar SKCK" {{ old('jenis_surat') == 'Pengantar SKCK' ? 'selected' : '' }}>Pengantar SKCK</option>
+                            <option value="SKD" {{ old('jenis_surat') == 'SKD' ? 'selected' : '' }}>Keterangan Domisili (SKD)</option>
+                            <option value="SKTM" {{ old('jenis_surat') == 'SKTM' ? 'selected' : '' }}>Keterangan Tidak Mampu (SKTM)</option>
+                            <option value="SKU" {{ old('jenis_surat') == 'SKU' ? 'selected' : '' }}>Keterangan Usaha (SKU)</option>
+                            <option value="Surat_Pengantar" {{ old('jenis_surat') == 'Surat_Pengantar' ? 'selected' : '' }}>Pengantar SKCK / Lainnya</option>
+                            <option value="SK_Kematian" {{ old('jenis_surat') == 'SK_Kematian' ? 'selected' : '' }}>Keterangan Kematian</option>
+                            <option value="SK_Pindah" {{ old('jenis_surat') == 'SK_Pindah' ? 'selected' : '' }}>Keterangan Pindah</option>
                         </select>
                         @error('jenis_surat')
                             <div class="invalid-feedback">{{ $message }}</div>

@@ -41,8 +41,8 @@
                                 <td>{{ $surat->jenis_surat }}</td>
                                 <td>{{ $surat->nomor_surat ?? '-' }}</td>
                                 <td>
-                                    @if($surat->status == 'Menunggu')
-                                        <span class="badge bg-warning text-dark">Menunggu</span>
+                                    @if($surat->status == 'Menunggu_Tanda_Tangan' || $surat->status == 'Ditinjau_Staf' || $surat->status == 'Draft')
+                                        <span class="badge bg-warning text-dark">Menunggu / Ditinjau</span>
                                     @elseif($surat->status == 'Disetujui')
                                         <span class="badge bg-success">Disetujui</span>
                                     @else

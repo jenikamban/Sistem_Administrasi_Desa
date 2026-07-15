@@ -43,12 +43,12 @@ class SuratPermohonanController extends Controller
     {
         $validate = $request->validate([
             'warga_id' => 'required|exists:wargas,id',
-            'jenis_surat' => 'required|in:Keterangan Domisili,Keterangan Tidak Mampu,Keterangan Usaha,Pengantar SKCK',
+            'jenis_surat' => 'required|in:SKU,SKTM,SKD,SK_Kematian,SK_Pindah,Surat_Pengantar',
             'keperluan' => 'required|string',
         ]);
 
         $validate['nomor_surat'] = null; // Generated upon approval
-        $validate['status'] = 'Menunggu';
+        $validate['status'] = 'Menunggu_Tanda_Tangan';
         $validate['kode_verifikasi'] = Str::random(10); // Code for QR later
         $validate['pengaju_id'] = auth()->id(); // Missing this!
 

@@ -9,7 +9,7 @@
                         <i class='bx bx-file me-2 text-primary'></i>
                         Detail Surat Permohonan
                     </h5>
-                    @if($suratPermohonan->status == 'Menunggu')
+                    @if($suratPermohonan->status == 'Menunggu_Tanda_Tangan' || $suratPermohonan->status == 'Ditinjau_Staf' || $suratPermohonan->status == 'Draft')
                         <span class="badge bg-warning text-dark px-3 py-2">Menunggu Persetujuan</span>
                     @elseif($suratPermohonan->status == 'Disetujui')
                         <span class="badge bg-success px-3 py-2">Disetujui</span>
@@ -86,7 +86,7 @@
                         </div>
                     @endif
 
-                    @if($suratPermohonan->status == 'Menunggu')
+                    @if($suratPermohonan->status == 'Menunggu_Tanda_Tangan' || $suratPermohonan->status == 'Ditinjau_Staf' || $suratPermohonan->status == 'Draft')
                         <div class="text-center mb-4">
                             <i class='bx bx-time text-warning' style="font-size: 4rem;"></i>
                             <p class="mt-2 text-muted">Surat ini sedang menunggu tindak lanjut dari pihak desa.</p>

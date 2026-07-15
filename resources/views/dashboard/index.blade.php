@@ -171,12 +171,12 @@
                                     <td>{{ $surat->nomor_surat ?? '-' }}</td>
                                     <td>{{ $surat->jenis_surat }}</td>
                                     <td>
-                                        @if($surat->status == 'Menunggu_Tanda_Tangan' || $surat->status == 'Ditinjau_Staf')
-                                            <span class="badge bg-warning">Menunggu</span>
-                                        @elseif($surat->status == 'Selesai')
-                                            <span class="badge bg-success">Selesai</span>
+                                        @if($surat->status == 'Menunggu_Tanda_Tangan' || $surat->status == 'Ditinjau_Staf' || $surat->status == 'Draft')
+                                            <span class="badge bg-warning text-dark">Menunggu</span>
+                                        @elseif($surat->status == 'Disetujui')
+                                            <span class="badge bg-success">Disetujui</span>
                                         @else
-                                            <span class="badge bg-secondary">{{ $surat->status }}</span>
+                                            <span class="badge bg-danger">{{ $surat->status }}</span>
                                         @endif
                                     </td>
                                 </tr>

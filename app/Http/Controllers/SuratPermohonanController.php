@@ -50,6 +50,7 @@ class SuratPermohonanController extends Controller
         $validate['nomor_surat'] = null; // Generated upon approval
         $validate['status'] = 'Menunggu';
         $validate['kode_verifikasi'] = Str::random(10); // Code for QR later
+        $validate['pengaju_id'] = auth()->id(); // Missing this!
 
         SuratPermohonan::create($validate);
 

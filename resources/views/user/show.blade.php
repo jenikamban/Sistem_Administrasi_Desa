@@ -6,7 +6,15 @@
     <div class="col-md-8">
         <h4 class="fw-bold mb-3">{{ $user->name }}</h4>
         <div class="mb-3">
-            <span class="badge bg-primary fs-6">{{ $user->role }}</span>
+            @if($user->role == 'Superadmin')
+                <span class="badge bg-primary fs-6">Superadmin</span>
+            @elseif($user->role == 'Kades_Lurah')
+                <span class="badge bg-success fs-6">Kepala Desa / Lurah</span>
+            @elseif($user->role == 'Staf')
+                <span class="badge bg-warning text-dark fs-6">Staf / Operator</span>
+            @else
+                <span class="badge bg-secondary fs-6">Warga Desa</span>
+            @endif
         </div>
         <div class="list-group list-group-flush">
             <div class="list-group-item px-0 border-0">

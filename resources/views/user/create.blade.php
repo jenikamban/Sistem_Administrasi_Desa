@@ -72,7 +72,9 @@
                             name="role" required>
                             <option value="">Pilih Role</option>
                             <option value="Superadmin" @selected(old('role') == 'Superadmin')>Superadmin</option>
-                            <option value="Admin" @selected(old('role') == 'Admin')>Admin</option>
+                            <option value="Kades_Lurah" @selected(old('role') == 'Kades_Lurah')>Kepala Desa / Lurah</option>
+                            <option value="Staf" @selected(old('role') == 'Staf')>Staf / Operator Desa</option>
+                            <option value="Warga" @selected(old('role') == 'Warga')>Warga Desa</option>
                         </select>
                         @error('role')
                             <div class="invalid-feedback">

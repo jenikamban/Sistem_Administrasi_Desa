@@ -56,9 +56,9 @@ Fitur SADEKA dibagi ke dalam 6 modul utama dengan prioritas berdasarkan kerangka
    │                                SADEKA                                  │
    └───────────────────────────────────┬────────────────────────────────────┘
                                        │
-         ┌───────────────┬─────────────┼─────────────┬───────────────┐
-         ▼               ▼             ▼             ▼               ▼
-   Kependudukan   Surat-Menyurat    Bansos       Pengaduan       Publikasi
+         ┌───────────────┬─────────────┼─────────────┬───────────────┬───────────────┐
+         ▼               ▼             ▼             ▼               ▼               ▼
+   Kependudukan   Surat-Menyurat    Bansos       Pengaduan       Publikasi   Arsip & Inventaris
 ```
 
 ### 3.1 Modul 1: Manajemen Kependudukan (Must Have)
@@ -97,6 +97,14 @@ Fitur SADEKA dibagi ke dalam 6 modul utama dengan prioritas berdasarkan kerangka
 ### 3.6 Modul 6: Dashboard & Analitik (Must Have)
 - **Visualisasi Demografi**: Grafik interaktif (jenis kelamin, kelompok usia, tingkat pendidikan, mata pencaharian) untuk mempermudah pengambilan keputusan pembangunan desa.
 - **Statistik Surat**: Jumlah surat yang diproses, disetujui, dan ditolak per bulan untuk mengevaluasi kecepatan layanan staf.
+
+### 3.7 Modul 7: Manajemen Arsip Dokumen (Should Have)
+- **Digitalisasi Dokumen**: Penyimpanan dokumen resmi desa (Surat, Laporan, Notulen) secara digital dalam format PDF untuk mencegah kehilangan data fisik.
+- **Pencarian Cepat**: Fasilitas pencarian dokumen berdasarkan judul, jenis dokumen, dan tanggal arsip.
+
+### 3.8 Modul 8: Inventaris Desa (Should Have)
+- **Pencatatan Aset**: Manajemen pendataan aset milik desa (Kendaraan, Peralatan Kantor, Bangunan) beserta kondisinya.
+- **Penugasan Penanggung Jawab**: Melacak staf yang bertanggung jawab atas pengelolaan barang inventaris tertentu.
 
 ---
 
@@ -144,6 +152,10 @@ Desain basis data SADEKA berpusat pada entitas warga (`wargas`) yang bertindak s
    - Relasi Many-to-Many dijembatani oleh tabel penghubung `penerima_bantuans`. Satu program bansos memiliki banyak warga penerima bantuan, dan sebaliknya satu warga dapat terdaftar di lebih dari satu program bansos yang berbeda (misal: PKH dan KIP).
 7. **Tabel `users` dan `beritas`**:
    - Relasi One-to-Many (`users.id` -> `beritas.penulis_id`). Setiap berita/pengumuman ditulis dan dipublikasikan oleh staf desa yang terautentikasi dalam sistem.
+8. **Tabel `users` dan `arsip_dokumens`**:
+   - Relasi One-to-Many (`users.id` -> `arsip_dokumens.diarsipkan_oleh`). Mencatat siapa staf yang melakukan pengarsipan dokumen.
+9. **Tabel `users` dan `inventaris_desas`**:
+   - Relasi One-to-Many (`users.id` -> `inventaris_desas.penanggung_jawab_id`). Menunjuk staf atau pejabat desa yang bertanggung jawab atas aset tertentu.
 
 ### 5.2 Visualisasi ERD (Mermaid Diagram)
 
@@ -163,6 +175,8 @@ erDiagram
     BANTUAN_SOSIAL ||--o{ PENERIMA_BANTUAN : "memiliki_program"
     WARGA ||--o{ PENERIMA_BANTUAN : "menerima"
     USERS ||--o{ BERITA : "menulis"
+    USERS ||--o{ ARSIP_DOKUMEN : "mengarsipkan"
+    USERS ||--o{ INVENTARIS_DESA : "bertanggung_jawab_atas"
 
     USERS {
         bigint id PK
@@ -287,6 +301,32 @@ erDiagram
         timestamp created_at
         timestamp updated_at
     }
+
+    ARSIP_DOKUMEN {
+        bigint id PK
+        string judul
+        string jenis_dokumen "Surat, Laporan, Notulen, dll"
+        string file_path "lokasi_file_pdf"
+        bigint diarsipkan_oleh FK "users_id"
+        timestamp tanggal_arsip
+        text keterangan "nullable"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    INVENTARIS_DESA {
+        bigint id PK
+        string nama_item
+        string kategori "Kendaraan, Peralatan, Bangunan, dll"
+        int jumlah
+        string kondisi "Baik, Rusak Ringan, Rusak Berat"
+        string lokasi
+        bigint penanggung_jawab_id FK "users_id"
+        timestamp tanggal_pencatatan
+        text keterangan "nullable"
+        timestamp created_at
+        timestamp updated_at
+    }
 ```
 
 ---
@@ -380,11 +420,12 @@ Untuk memastikan kualitas dan penyelesaian tepat waktu, pengembangan SADEKA diba
   - Pembuatan form pengajuan surat dinamis (menggunakan Select2 untuk relasi warga).
   - Alur approval berjenjang (Operator -> Kepala Desa).
   - Integrasi `laravel-dompdf` dan generator QR Code verifikasi.
-- **Fase 4: Modul Bansos, Pengaduan, & Berita (Minggu 5)**
-  - Migrasi skema tabel `bantuan_sosials`, `penerima_bantuans`, `pengaduans`, dan `beritas`.
+- **Fase 4: Modul Bansos, Pengaduan, Publikasi & Ekstra (Minggu 5)**
+  - Migrasi skema tabel `bantuan_sosials`, `penerima_bantuans`, `pengaduans`, `beritas`, `arsip_dokumens`, dan `inventaris_desas`.
   - Halaman manajemen bansos & pemetaan penerima manfaat.
   - Form pengaduan warga dengan fitur unggah bukti foto dan sistem respons dari staf.
   - CMS Berita dengan TinyMCE Editor.
+  - CRUD manajemen Arsip Dokumen Digital dan Inventaris Aset Desa.
 - **Fase 5: Dashboard Analitis, UAT, & Deployment (Minggu 6)**
   - Implementasi widget dan grafik analitik kependudukan pada dashboard admin (Chart.js / ApexCharts bawaan NiceAdmin).
   - Pengujian fungsionalitas menyeluruh (Unit & Feature Testing menggunakan Pest).

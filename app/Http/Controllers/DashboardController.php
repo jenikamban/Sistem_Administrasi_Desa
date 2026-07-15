@@ -11,15 +11,67 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $totalUsers = \App\Models\User::count();
-        $superadminCount = \App\Models\User::where('role', 'Superadmin')->count();
-        $adminCount = \App\Models\User::where('role', 'Admin')->count();
+        $totalPenduduk = \App\Models\Warga::where('status_keaktifan', 'Aktif')->count();
+        $totalKK = \App\Models\KartuKeluarga::count();
+        $suratMenunggu = \App\Models\SuratPermohonan::whereIn('status', ['Menunggu_Tanda_Tangan', 'Ditinjau_Staf'])->count();
+        $pengaduanBaru = \App\Models\Pengaduan::where('status', 'Pending')->count();
+
+        $jenisKelamin = \App\Models\Warga::where('status_keaktifan', 'Aktif')
+            ->select('jenis_kelamin', DB::raw('count(*) as total'))
+            ->groupBy('jenis_kelamin')
+            ->pluck('total', 'jenis_kelamin')->toArray();
+
+        $pekerjaanPopuler = \App\Models\Warga::where('status_keaktifan', 'Aktif')
+            ->select('pekerjaan', DB::raw('count(*) as total'))
+            ->groupBy('pekerjaan')
+            ->orderByDesc('total')
+            ->limit(5)
+            ->pluck('total', 'pekerjaan')->toArray();
+
+        // Umur
+        $wargas = \App\Models\Warga::where('status_keaktifan', 'Aktif')->get(['tanggal_lahir']);
+        $umur = [
+            'Balita (<5 th)' => 0,
+            'Anak-anak (5-12 th)' => 0,
+            'Remaja (13-18 th)' => 0,
+            'Produktif (19-59 th)' => 0,
+            'Lansia (>60 th)' => 0,
+        ];
+
+        foreach ($wargas as $w) {
+            $age = \Carbon\Carbon::parse($w->tanggal_lahir)->age;
+            if ($age < 5) $umur['Balita (<5 th)']++;
+            elseif ($age <= 12) $umur['Anak-anak (5-12 th)']++;
+            elseif ($age <= 18) $umur['Remaja (13-18 th)']++;
+            elseif ($age <= 59) $umur['Produktif (19-59 th)']++;
+            else $umur['Lansia (>60 th)']++;
+        }
+
+        // Tren Surat (SQLite compatible year/month extraction if using sqlite, or simple collection grouping)
+        $suratPerBulan = \App\Models\SuratPermohonan::whereYear('created_at', date('Y'))
+            ->get()
+            ->groupBy(function($d) {
+                return \Carbon\Carbon::parse($d->created_at)->format('M');
+            })->map(function ($row) {
+                return $row->count();
+            });
+
+        // Pengajuan Terbaru & Laporan Pengaduan Terkini
+        $suratTerbaru = \App\Models\SuratPermohonan::latest()->limit(5)->get();
+        $pengaduanTerkini = \App\Models\Pengaduan::latest()->limit(5)->get();
 
         return view('dashboard.index', [
-            'title' => 'Dashboard',
-            'totalUsers' => $totalUsers,
-            'superadminCount' => $superadminCount,
-            'adminCount' => $adminCount,
+            'title' => 'Dashboard Analitik',
+            'totalPenduduk' => $totalPenduduk,
+            'totalKK' => $totalKK,
+            'suratMenunggu' => $suratMenunggu,
+            'pengaduanBaru' => $pengaduanBaru,
+            'jenisKelamin' => $jenisKelamin,
+            'pekerjaanPopuler' => $pekerjaanPopuler,
+            'umur' => $umur,
+            'suratPerBulan' => $suratPerBulan,
+            'suratTerbaru' => $suratTerbaru,
+            'pengaduanTerkini' => $pengaduanTerkini,
         ]);
     }
 

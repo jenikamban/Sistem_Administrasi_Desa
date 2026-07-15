@@ -30,189 +30,252 @@
 
     <!-- Statistics Cards -->
     <div class="row g-4 mb-4">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <p class="text-muted mb-1 small">Total Users</p>
-                            <h2 class="fw-bold mb-0">{{ $totalUsers }}</h2>
+                            <p class="text-muted mb-1 small">Total Penduduk</p>
+                            <h2 class="fw-bold mb-0">{{ $totalPenduduk }}</h2>
                         </div>
                         <div class="bg-primary bg-opacity-10 rounded-circle p-3">
-                            <i class='bx bx-user fs-2 text-primary'></i>
+                            <i class='bx bx-group fs-2 text-primary'></i>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer bg-primary bg-opacity-10 border-0 py-2">
-                    <small class="text-primary fw-semibold">
-                        <i class='bx bx-trending-up me-1'></i>
-                        All registered users
-                    </small>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <p class="text-muted mb-1 small">Superadmin</p>
-                            <h2 class="fw-bold mb-0">{{ $superadminCount }}</h2>
+                            <p class="text-muted mb-1 small">Total KK</p>
+                            <h2 class="fw-bold mb-0">{{ $totalKK }}</h2>
                         </div>
                         <div class="bg-success bg-opacity-10 rounded-circle p-3">
-                            <i class='bx bx-shield fs-2 text-success'></i>
+                            <i class='bx bx-home fs-2 text-success'></i>
                         </div>
                     </div>
-                </div>
-                <div class="card-footer bg-success bg-opacity-10 border-0 py-2">
-                    <small class="text-success fw-semibold">
-                        <i class='bx bx-check-circle me-1'></i>
-                        Full access users
-                    </small>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card shadow-sm border-0 h-100">
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
-                            <p class="text-muted mb-1 small">Admin</p>
-                            <h2 class="fw-bold mb-0">{{ $adminCount }}</h2>
+                            <p class="text-muted mb-1 small">Surat Menunggu</p>
+                            <h2 class="fw-bold mb-0">{{ $suratMenunggu }}</h2>
                         </div>
-                        <div class="bg-info bg-opacity-10 rounded-circle p-3">
-                            <i class='bx bx-user-check fs-2 text-info'></i>
+                        <div class="bg-warning bg-opacity-10 rounded-circle p-3">
+                            <i class='bx bx-envelope fs-2 text-warning'></i>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer bg-info bg-opacity-10 border-0 py-2">
-                    <small class="text-info fw-semibold">
-                        <i class='bx bx-user-circle me-1'></i>
-                        Standard access users
-                    </small>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <p class="text-muted mb-1 small">Pengaduan Baru</p>
+                            <h2 class="fw-bold mb-0">{{ $pengaduanBaru }}</h2>
+                        </div>
+                        <div class="bg-danger bg-opacity-10 rounded-circle p-3">
+                            <i class='bx bx-message-error fs-2 text-danger'></i>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="card shadow-sm border-0 mb-4">
-        <div class="card-header bg-white border-bottom">
-            <h5 class="mb-0 fw-bold">
-                <i class='bx bx-rocket me-2 text-primary'></i>
-                Quick Actions
-            </h5>
-        </div>
-        <div class="card-body">
-            <div class="row g-3 mt-2">
-                <div class="col-md-3">
-                    <a href="{{ route('user.index') }}" class="text-decoration-none">
-                        <div class="card border border-primary border-opacity-25 h-100 hover-shadow">
-                            <div class="card-body text-center mt-4">
-                                <i class='bx bx-user-plus fs-1 text-primary mb-2'></i>
-                                <h6 class="mb-0">Manage Users</h6>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="{{ route('setting.index') }}" class="text-decoration-none">
-                        <div class="card border border-success border-opacity-25 h-100 hover-shadow">
-                            <div class="card-body text-center mt-4"">
-                                <i class='bx bx-cog fs-1 text-success mb-2'></i>
-                                <h6 class=" mb-0">Settings</h6>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="{{ route('dashboard.show') }}" class="text-decoration-none">
-                        <div class="card border border-info border-opacity-25 h-100 hover-shadow">
-                            <div class="card-body text-center mt-4"">
-                                <i class='bx bx-user-circle fs-1 text-info mb-2'></i>
-                                <h6 class=" mb-0">My Profile</h6>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-md-3">
-                    <a href="{{ route('dashboard.edit') }}" class="text-decoration-none">
-                        <div class="card border border-warning border-opacity-25 h-100 hover-shadow">
-                            <div class="card-body text-center mt-4"">
-                                <i class='bx bx-edit fs-1 text-warning mb-2'></i>
-                                <h6 class=" mb-0">Edit Profile</h6>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- System Information -->
-    <div class="row g-3">
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0">
+    <!-- Charts Section -->
+    <div class="row g-4 mb-4">
+        <!-- Demografi Jenis Kelamin -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white border-bottom">
-                    <h6 class="mb-0 fw-bold">
-                        <i class='bx bx-info-circle me-2 text-primary'></i>
-                        System Information
-                    </h6>
+                    <h5 class="mb-0 fw-bold">Demografi Jenis Kelamin</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled mb-0 pt-4">
-                        <li class="mb-2">
-                            <i class='bx bx-check-circle text-success me-2'></i>
-                            <strong>Laravel Version:</strong> {{ app()->version() }}
-                        </li>
-                        <li class="mb-2">
-                            <i class='bx bx-check-circle text-success me-2'></i>
-                            <strong>PHP Version:</strong> {{ PHP_VERSION }}
-                        </li>
-                        <li class="mb-2">
-                            <i class='bx bx-check-circle text-success me-2'></i>
-                            <strong>Environment:</strong> {{ config('app.env') }}
-                        </li>
-                    </ul>
+                    <div id="chartJenisKelamin"></div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
-            <div class="card shadow-sm border-0 pt-4">
+        <!-- Demografi Umur -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
                 <div class="card-header bg-white border-bottom">
-                    <h6 class="mb-0 fw-bold">
-                        <i class='bx bx-user me-2 text-primary'></i>
-                        Your Account
-                    </h6>
+                    <h5 class="mb-0 fw-bold">Demografi Umur</h5>
                 </div>
                 <div class="card-body">
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2">
-                            <i class='bx bx-envelope text-primary me-2'></i>
-                            <strong>Email:</strong> {{ Auth::user()->email }}
-                        </li>
-                        <li class="mb-2">
-                            <i class='bx bx-calendar text-primary me-2'></i>
-                            <strong>Member Since:</strong> {{ Auth::user()->created_at->format('d M Y') }}
-                        </li>
-                        <li class="mb-2">
-                            <i class='bx bx-time text-primary me-2'></i>
-                            <strong>Last Updated:</strong> {{ Auth::user()->updated_at->diffForHumans() }}
-                        </li>
-                    </ul>
+                    <div id="chartUmur"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pekerjaan Populer -->
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Top 5 Pekerjaan</h5>
+                </div>
+                <div class="card-body">
+                    <div id="chartPekerjaan"></div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Tren Surat -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Tren Pengajuan Surat (Tahun Ini)</h5>
+                </div>
+                <div class="card-body">
+                    <div id="chartSurat"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    @push('modals')
-    @endpush
+    <!-- Tables Section -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Pengajuan Surat Terbaru</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>No Surat</th>
+                                    <th>Jenis</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($suratTerbaru as $surat)
+                                <tr>
+                                    <td>{{ $surat->nomor_surat ?? '-' }}</td>
+                                    <td>{{ $surat->jenis_surat }}</td>
+                                    <td>
+                                        @if($surat->status == 'Menunggu_Tanda_Tangan' || $surat->status == 'Ditinjau_Staf')
+                                            <span class="badge bg-warning">Menunggu</span>
+                                        @elseif($surat->status == 'Selesai')
+                                            <span class="badge bg-success">Selesai</span>
+                                        @else
+                                            <span class="badge bg-secondary">{{ $surat->status }}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0 fw-bold">Laporan Pengaduan Terkini</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Judul</th>
+                                    <th>Kategori</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($pengaduanTerkini as $aduan)
+                                <tr>
+                                    <td>{{ $aduan->judul }}</td>
+                                    <td>{{ $aduan->kategori }}</td>
+                                    <td>
+                                        @if($aduan->status == 'Pending')
+                                            <span class="badge bg-danger">Baru</span>
+                                        @elseif($aduan->status == 'Diproses')
+                                            <span class="badge bg-warning">Diproses</span>
+                                        @elseif($aduan->status == 'Selesai')
+                                            <span class="badge bg-success">Selesai</span>
+                                        @else
+                                            <span class="badge bg-secondary">{{ $aduan->status }}</span>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     @push('scripts')
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Data dari Controller
+            const dataJenisKelamin = @json($jenisKelamin);
+            const dataUmur = @json($umur);
+            const dataPekerjaan = @json($pekerjaanPopuler);
+            const dataSurat = @json($suratPerBulan);
+
+            // Chart Jenis Kelamin
+            new ApexCharts(document.querySelector("#chartJenisKelamin"), {
+                series: Object.values(dataJenisKelamin),
+                chart: { type: 'pie', height: 300 },
+                labels: Object.keys(dataJenisKelamin),
+                colors: ['#008FFB', '#FF4560']
+            }).render();
+
+            // Chart Umur
+            new ApexCharts(document.querySelector("#chartUmur"), {
+                series: Object.values(dataUmur),
+                chart: { type: 'donut', height: 300 },
+                labels: Object.keys(dataUmur),
+            }).render();
+
+            // Chart Pekerjaan
+            new ApexCharts(document.querySelector("#chartPekerjaan"), {
+                series: [{ name: 'Jumlah', data: Object.values(dataPekerjaan) }],
+                chart: { type: 'bar', height: 300 },
+                xaxis: { categories: Object.keys(dataPekerjaan) },
+                plotOptions: {
+                    bar: { horizontal: true, borderRadius: 4 }
+                },
+                colors: ['#00E396']
+            }).render();
+
+            // Chart Surat
+            new ApexCharts(document.querySelector("#chartSurat"), {
+                series: [{ name: 'Pengajuan Surat', data: Object.values(dataSurat) }],
+                chart: { type: 'area', height: 350 },
+                xaxis: { categories: Object.keys(dataSurat) },
+                dataLabels: { enabled: false },
+                stroke: { curve: 'smooth' },
+                fill: { type: 'gradient' }
+            }).render();
+        });
+    </script>
     @endpush
 
 </x-app>

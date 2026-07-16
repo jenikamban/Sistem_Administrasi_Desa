@@ -268,6 +268,7 @@
 
         <ul class="sidebar-nav" id="sidebar-nav">
 
+            @if (Auth::user()->role !== 'Warga')
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('dashboard.*') ? '' : 'collapsed' }}"
                     href="{{ route('dashboard.index') }}">
@@ -275,7 +276,9 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+            @endif
 
+            @if (Auth::user()->role !== 'Warga')
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('setting.*') ? '' : 'collapsed' }}"
                     href="{{ route('setting.index') }}">
@@ -283,6 +286,7 @@
                     <span>Setting</span>
                 </a>
             </li>
+            @endif
 
 
             @if (in_array(Auth::user()->role, ['Superadmin', 'Admin']))
@@ -346,6 +350,7 @@
             </li>
 
 
+            @if (Auth::user()->role !== 'Warga')
             <li class="nav-heading">Publikasi & Transparansi</li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('berita.*') ? '' : 'collapsed' }}"
@@ -361,7 +366,9 @@
                     <span>Realisasi APBD</span>
                 </a>
             </li>
+            @endif
 
+            @if (Auth::user()->role !== 'Warga')
             <li class="nav-heading">Arsip</li>
             <li class="nav-item">
                 <a class="nav-link {{ request()->routeIs('arsip-dokumen.*') ? '' : 'collapsed' }}"
@@ -379,6 +386,7 @@
                     <span>Inventaris Desa</span>
                 </a>
             </li>
+            @endif
 
         </ul>
 

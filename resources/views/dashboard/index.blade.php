@@ -29,6 +29,7 @@
     </div>
 
     <!-- Statistics Cards -->
+    @if (Auth::user()->role !== 'Warga')
     <div class="row g-4 mb-4">
         <div class="col-md-3">
             <div class="card shadow-sm border-0 h-100">
@@ -229,6 +230,7 @@
         </div>
     </div>
 
+    @endif
 
     @push('scripts')
     <script>

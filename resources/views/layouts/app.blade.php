@@ -289,6 +289,16 @@
             @endif
 
 
+            @if (Auth::user()->role !== 'Warga')
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('laporan.*') ? '' : 'collapsed' }}"
+                    href="{{ route('laporan.index') }}">
+                    <i class="bi bi-file-earmark-bar-graph"></i>
+                    <span>Laporan Keseluruhan</span>
+                </a>
+            </li>
+            @endif
+
             @if (in_array(Auth::user()->role, ['Superadmin', 'Admin']))
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('user.*') ? '' : 'collapsed' }}"

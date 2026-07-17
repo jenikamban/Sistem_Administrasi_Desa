@@ -56,14 +56,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/pengaduan/{pengaduan}/respond', [\App\Http\Controllers\PengaduanController::class, 'respond'])->name('pengaduan.respond')->middleware('role:Superadmin,Admin,Staf');
 
     // Task 6: Publikasi dan Transparansi
-    Route::resource('/berita', \App\Http\Controllers\BeritaController::class)->parameters(['berita' => 'berita'])->middleware('role:Superadmin,Admin,Staf');
-    Route::resource('/apbd', \App\Http\Controllers\ApbdRealisasiController::class)->middleware('role:Superadmin,Admin,Staf');
+    Route::resource('/berita', \App\Http\Controllers\BeritaController::class)->parameters(['berita' => 'berita'])->middleware('role:Superadmin,Admin,Staf,Kades_Lurah');
+    Route::resource('/apbd', \App\Http\Controllers\ApbdRealisasiController::class)->middleware('role:Superadmin,Admin,Staf,Kades_Lurah');
 
     // Task 8: Arsip Dokumen
-    Route::resource('/arsip-dokumen', \App\Http\Controllers\ArsipDokumenController::class)->middleware('role:Superadmin,Staf');
+    Route::resource('/arsip-dokumen', \App\Http\Controllers\ArsipDokumenController::class)->middleware('role:Superadmin,Staf,Kades_Lurah');
 
     // Task 9: Inventaris Desa
-    Route::resource('/inventaris-desa', \App\Http\Controllers\InventarisDesaController::class)->middleware('role:Superadmin,Staf');
+    Route::resource('/inventaris-desa', \App\Http\Controllers\InventarisDesaController::class)->middleware('role:Superadmin,Staf,Kades_Lurah');
+
+    // Task 10: Laporan Keseluruhan
+    Route::get('/laporan', [\App\Http\Controllers\LaporanController::class, 'index'])->name('laporan.index')->middleware('role:Superadmin,Admin,Staf,Kades_Lurah');
 
     Route::get('/setting', [SettingController::class, 'index'])->name('setting.index');
     Route::put('/setting/{setting}/update', [SettingController::class, 'update'])->name('setting.update');

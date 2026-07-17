@@ -230,6 +230,65 @@
         </div>
     </div>
 
+    @else
+    <!-- Warga Dashboard Actions -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <a href="{{ route('surat-permohonan.create') }}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 h-100 btn-primary" style="transition: 0.3s;">
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-white bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                            <i class='bx bx-envelope-open fs-1 text-white'></i>
+                        </div>
+                        <h5 class="fw-bold text-white mb-0">Ajukan Surat</h5>
+                        <p class="text-white-50 small mt-2 mb-0">(Domisili, Usaha, dll)</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="{{ route('surat-permohonan.index') }}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 h-100 btn-primary" style="transition: 0.3s;">
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-white bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                            <i class='bx bx-list-ul fs-1 text-white'></i>
+                        </div>
+                        <h5 class="fw-bold text-white mb-0">Status Pengajuan</h5>
+                        <p class="text-white-50 small mt-2 mb-0">Lihat status surat Anda</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="{{ route('pengaduan.create') }}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 h-100 btn-primary" style="transition: 0.3s;">
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-white bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                            <i class='bx bx-message-error fs-1 text-white'></i>
+                        </div>
+                        <h5 class="fw-bold text-white mb-0">Pengaduan/Saran</h5>
+                        <p class="text-white-50 small mt-2 mb-0">Sampaikan keluhan Anda</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3">
+            <a href="{{ route('surat-permohonan.index') }}" class="text-decoration-none">
+                <div class="card shadow-sm border-0 h-100 btn-primary" style="transition: 0.3s;">
+                    <div class="card-body p-4 text-center">
+                        <div class="bg-white bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
+                            <i class='bx bx-printer fs-1 text-white'></i>
+                        </div>
+                        <h5 class="fw-bold text-white mb-0">Cetak Surat</h5>
+                        <p class="text-white-50 small mt-2 mb-0">Cetak surat disetujui</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
     @endif
 
     @push('scripts')
